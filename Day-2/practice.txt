@@ -1,0 +1,409 @@
+Bilkul. Ye **cheat sheet** hai jo humne ab tak practically kiya. Isme har command ka purpose aur short definition hai. Isko save kar lo. Revision ke time bahut kaam aayega.
+
+```text
+=========================================
+        LINUX PROCESSES - PRACTICAL
+=========================================
+
+--------------------------------------------------
+STEP 1 : Check Current Shell
+--------------------------------------------------
+
+Command:
+echo $SHELL
+
+Purpose:
+Current shell ka path dikhata hai.
+
+Example Output:
+/bin/bash
+
+Definition:
+Shell ek command interpreter hai jo user aur kernel ke beech communication karata hai.
+
+
+--------------------------------------------------
+STEP 2 : Check Current Shell PID
+--------------------------------------------------
+
+Command:
+echo $$
+
+Purpose:
+Current shell ka Process ID (PID) dikhata hai.
+
+Example:
+3972
+
+Definition:
+PID (Process ID) har running process ka unique number hota hai.
+
+
+--------------------------------------------------
+STEP 3 : Check Parent Process ID
+--------------------------------------------------
+
+Command:
+echo $PPID
+
+Purpose:
+Current shell ke parent process ka PID dikhata hai.
+
+Example:
+3961
+
+Definition:
+PPID (Parent Process ID) batata hai kis process ne current process create kiya.
+
+
+--------------------------------------------------
+STEP 4 : View Running Processes
+--------------------------------------------------
+
+Command:
+ps -f
+
+Purpose:
+Current terminal ke running processes dikhata hai.
+
+Important Columns:
+
+UID   -> Process owner
+PID   -> Process ID
+PPID  -> Parent Process ID
+CMD   -> Running command
+
+Definition:
+ps command running processes ki information show karti hai.
+
+
+--------------------------------------------------
+STEP 5 : View All Processes
+--------------------------------------------------
+
+Command:
+ps -ef
+
+Purpose:
+System ke almost sabhi running processes dikhata hai.
+
+Definition:
+Har process ka PID, PPID aur owner dekhne ke liye use hota hai.
+
+
+--------------------------------------------------
+STEP 6 : Search Specific Process
+--------------------------------------------------
+
+Command:
+ps -ef | grep sleep
+
+Purpose:
+Sirf "sleep" process ko search karta hai.
+
+Definition:
+grep output ko filter karta hai.
+
+
+--------------------------------------------------
+STEP 7 : Create a Foreground Process
+--------------------------------------------------
+
+Command:
+sleep 30
+
+Purpose:
+30 seconds tak process run karega.
+
+Observation:
+
+✔ Terminal busy ho jata hai.
+✔ Dusri command execute nahi kar sakte.
+
+Definition:
+Foreground Process terminal ka control le leta hai.
+
+
+--------------------------------------------------
+STEP 8 : Stop Foreground Process
+--------------------------------------------------
+
+Shortcut:
+Ctrl + C
+
+Purpose:
+Running foreground process terminate karta hai.
+
+Definition:
+SIGINT signal bhejkar process ko stop karta hai.
+
+
+--------------------------------------------------
+STEP 9 : Suspend Process
+--------------------------------------------------
+
+Shortcut:
+Ctrl + Z
+
+Purpose:
+Running process ko pause (Stopped state) me bhejta hai.
+
+Definition:
+Process delete nahi hota.
+Sirf temporarily stop hota hai.
+
+
+--------------------------------------------------
+STEP 10 : Check Shell Jobs
+--------------------------------------------------
+
+Command:
+jobs
+
+Purpose:
+Current shell ke background aur stopped jobs dikhata hai.
+
+Example:
+
+[1]+ Running sleep 30 &
+[2]- Stopped sleep 60
+
+Definition:
+Sirf current shell ke jobs dikhata hai.
+
+
+--------------------------------------------------
+STEP 11 : Create Background Process
+--------------------------------------------------
+
+Command:
+sleep 300 &
+
+Purpose:
+Process background me run hota hai.
+
+Example Output:
+
+[1] 4274
+
+Meaning:
+
+[1]   -> Job Number
+4274  -> PID
+
+Definition:
+Background process terminal ko free rakhta hai.
+
+
+--------------------------------------------------
+STEP 12 : Resume Background Process
+--------------------------------------------------
+
+Command:
+bg %1
+
+Purpose:
+Stopped process ko background me continue karta hai.
+
+Definition:
+Process Running state me aa jata hai aur Bash free rehta hai.
+
+
+--------------------------------------------------
+STEP 13 : Bring Process to Foreground
+--------------------------------------------------
+
+Command:
+fg %1
+
+Purpose:
+Background process ko foreground me lata hai.
+
+Definition:
+Terminal fir us process ke control me chala jata hai.
+
+
+--------------------------------------------------
+STEP 14 : Kill Process
+--------------------------------------------------
+
+Command:
+kill PID
+
+Example:
+kill 4274
+
+Purpose:
+Gracefully process terminate karta hai.
+
+Definition:
+SIGTERM signal bhejta hai.
+
+
+--------------------------------------------------
+STEP 15 : Force Kill Process
+--------------------------------------------------
+
+Command:
+kill -9 PID
+
+Example:
+kill -9 4274
+
+Purpose:
+Forcefully process terminate karta hai.
+
+Definition:
+SIGKILL signal bhejta hai.
+Process ko immediately remove karta hai.
+
+
+--------------------------------------------------
+STEP 16 : Create Child Bash
+--------------------------------------------------
+
+Command:
+bash
+
+Purpose:
+Naya bash process create karta hai.
+
+Definition:
+Current bash Parent hota hai.
+Naya bash Child process hota hai.
+
+
+--------------------------------------------------
+STEP 17 : Exit Child Bash
+--------------------------------------------------
+
+Command:
+exit
+
+Purpose:
+Current child bash terminate hota hai.
+
+Definition:
+Parent bash me wapas aa jate ho.
+
+
+--------------------------------------------------
+IMPORTANT CONCEPTS
+--------------------------------------------------
+
+1. Process
+Program jab execute hota hai tab Process banta hai.
+
+2. PID
+Har process ka unique ID.
+
+3. PPID
+Current process kis process ne create kiya.
+
+4. Parent Process
+Jo process kisi dusre process ko create kare.
+
+5. Child Process
+Jo process parent dwara create kiya gaya ho.
+
+6. Foreground Process
+Terminal ka control leta hai.
+
+Example:
+sleep 30
+
+7. Background Process
+Terminal free rehta hai.
+
+Example:
+sleep 30 &
+
+8. Jobs
+Current shell ke background/stopped processes.
+
+9. ps
+Running processes ki information.
+
+10. kill
+Running process terminate karta hai.
+
+11. Ctrl + C
+Foreground process terminate.
+
+12. Ctrl + Z
+Foreground process suspend (Stopped).
+
+13. bg
+Stopped process ko background me continue.
+
+14. fg
+Background process ko foreground me le aata hai.
+
+--------------------------------------------------
+PRACTICAL FLOW
+--------------------------------------------------
+
+echo $$
+
+↓
+
+ps -f
+
+↓
+
+sleep 30
+
+↓
+
+Ctrl + Z
+
+↓
+
+jobs
+
+↓
+
+bg %1
+
+↓
+
+jobs
+
+↓
+
+fg %1
+
+↓
+
+Ctrl + C
+
+↓
+
+sleep 300 &
+
+↓
+
+ps -ef | grep sleep
+
+↓
+
+kill PID
+
+↓
+
+bash
+
+↓
+
+echo $$
+
+↓
+
+echo $PPID
+
+↓
+
+exit
+```
+
+Ye sequence exactly wahi hai jo ek Linux beginner ko **Processes** chapter me practically aana chahiye. Agar tum ye bina notes dekhe kar sakte ho, to interview level ke basic process concepts clear hain.
